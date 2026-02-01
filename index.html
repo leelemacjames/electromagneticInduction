@@ -127,11 +127,18 @@
             border-radius: 8px;
             padding: 15px;
             border: 1px solid rgba(100, 181, 246, 0.3);
+            height: 400px;
         }
         
-        canvas {
-            width: 100%;
+        .canvas-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 350px;
             border-radius: 4px;
+        }
+        
+        #physicsCanvas {
+            max-height: 450px !important;
         }
         
         .controls {
@@ -261,7 +268,7 @@
             <h3>Faraday's Law of Electromagnetic Induction</h3>
             <p>The induced electromotive force (emf) in a closed circuit is equal to the negative rate of change of magnetic flux through the circuit:</p>
             <div class="equation-box">
-                <div class="equation">ε = -dΦ_B/dt = -d(BA cos θ)/dt</div>
+                <div class="equation">ε = -dΦ<sub>B</sub>/dt = -d(BA cos θ)/dt</div>
             </div>
             <p>This fundamental law connects changing magnetic fields to electric phenomena, providing the basis for generators, transformers, and countless electromagnetic devices.</p>
             
@@ -277,14 +284,14 @@
             <p>Electromotive force is fundamentally different from electrostatic potential difference. EMF represents the work done per unit charge by <em>non-conservative forces</em>—in this case, the induced electric field arising from changing magnetic flux. This induced electric field forms closed loops (unlike conservative electrostatic fields) and can drive current even in a stationary conductor.</p>
             
             <div class="equation-box">
-                <div class="equation">∮ E⃗·dl⃗ = -dΦ_B/dt  (Maxwell-Faraday equation)</div>
+                <div class="equation">∮ <strong>E</strong>·d<strong>l</strong> = -dΦ<sub>B</sub>/dt  (Maxwell-Faraday equation)</div>
             </div>
             
             <h3>Maxwell's Displacement Current: The Abstract Flow</h3>
             <p>In Maxwell's complete theory, changing electric fields create magnetic fields, just as changing magnetic fields create electric fields. The "displacement current" is not a flow of actual charges but represents the rate of change of electric field:</p>
             
             <div class="equation-box">
-                <div class="equation">I_d = ε₀ dΦ_E/dt</div>
+                <div class="equation">I<sub>d</sub> = ε₀ dΦ<sub>E</sub>/dt</div>
             </div>
             
             <p>This abstract current exists in vacuum and insulators. However, for <strong>conduction current</strong>—the actual flow of charges we measure as "current"—we need mobile charge carriers. This is why <em>metals are essential</em>: they provide free electrons that can respond to the induced electric field, converting the abstract electromagnetic phenomenon into measurable current.</p>
@@ -391,7 +398,8 @@
         let currentScenario = 'falling';
         let isRunning = false;
         let time = 0;
-        let dt = 0.016; // ~60 FPS
+        let dtBase = 0.016; // base timestep (~60 FPS)
+        let simSpeed = 0.20; // 0.20 = 5× slower (≈10 s magnet fall)
         let animationId = null;
         
         // Physics parameters
@@ -482,6 +490,22 @@
             const controlsDiv = document.getElementById('controls');
             controlsDiv.innerHTML = '';
             
+            // Global simulation-speed control (affects motion + graphs)
+            const speedGroup = document.createElement('div');
+            speedGroup.className = 'control-group';
+            speedGroup.innerHTML = `
+                <label>Simulation speed (× real-time)</label>
+                <input type="range"
+                       id="simSpeed"
+                       min="0.05"
+                       max="1.00"
+                       step="0.05"
+                       value="${simSpeed}"
+                       oninput="updateSimSpeed(this.value)">
+                <div class="value-display" id="simSpeed-value">${simSpeed.toFixed(2)}×</div>
+            `;
+            controlsDiv.appendChild(speedGroup);
+
             const defs = controlDefs[currentScenario];
             defs.forEach(def => {
                 const group = document.createElement('div');
@@ -507,6 +531,12 @@
             });
         }
         
+        function updateSimSpeed(value) {
+            simSpeed = Math.max(0.05, Math.min(1.0, parseFloat(value)));
+            const el = document.getElementById('simSpeed-value');
+            if (el) el.textContent = simSpeed.toFixed(2) + '×';
+        }
+        
         function updateParam(name, value, scale = 1) {
             params[currentScenario][name] = parseFloat(value) * scale;
             document.getElementById(name + '-value').textContent = parseFloat(value).toFixed(2);
@@ -530,7 +560,8 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
                     animation: false,
                     scales: {
                         x: {
@@ -555,6 +586,7 @@
                 ...chartConfig,
                 options: {
                     ...chartConfig.options,
+                    aspectRatio: 2,
                     scales: {
                         ...chartConfig.options.scales,
                         y: {
@@ -577,6 +609,7 @@
                 },
                 options: {
                     ...chartConfig.options,
+                    aspectRatio: 2,
                     scales: {
                         ...chartConfig.options.scales,
                         y: {
@@ -599,6 +632,7 @@
                 },
                 options: {
                     ...chartConfig.options,
+                    aspectRatio: 2,
                     scales: {
                         ...chartConfig.options.scales,
                         y: {
@@ -940,18 +974,20 @@
         }
         
         function updatePhysics() {
+            const dt = dtBase * simSpeed;
+
             if (currentScenario === 'falling') {
-                updateFalling();
+                updateFalling(dt);
             } else if (currentScenario === 'forced') {
-                updateForced();
+                updateForced(dt);
             } else if (currentScenario === 'pendulum') {
-                updatePendulum();
+                updatePendulum(dt);
             }
-            
+
             time += dt;
         }
         
-        function updateFalling() {
+        function updateFalling(dt) {
             const p = params.falling;
             
             // Electromagnetic damping coefficient
@@ -977,7 +1013,7 @@
             p.timeData.push(time);
         }
         
-        function updateForced() {
+        function updateForced(dt) {
             const p = params.forced;
             
             const omega0 = Math.sqrt(p.k / p.mass);
@@ -1005,7 +1041,7 @@
             p.timeData.push(time);
         }
         
-        function updatePendulum() {
+        function updatePendulum(dt) {
             const p = params.pendulum;
             
             const g = 9.81;
