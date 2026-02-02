@@ -255,6 +255,78 @@
             color: #ffeb3b;
             margin-bottom: 10px;
         }
+        
+        .exam-workshop {
+            background: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .exam-workshop h2 {
+            color: #f44336;
+            margin-bottom: 15px;
+        }
+        
+        .exam-question {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+        
+        .answer-section {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 3px solid #4caf50;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .answer-section.visible {
+            display: block;
+        }
+        
+        .reveal-btn {
+            padding: 8px 16px;
+            background: rgba(100, 181, 246, 0.3);
+            border: 2px solid #64b5f6;
+            border-radius: 6px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        
+        .reveal-btn:hover {
+            background: rgba(100, 181, 246, 0.5);
+        }
+        
+        .student-answer {
+            background: rgba(244, 67, 54, 0.2);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .examiner-answer {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .commentary {
+            color: #ffeb3b;
+            font-style: italic;
+            margin: 5px 0;
+            padding: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -391,15 +463,249 @@
         </div>
         
         <div class="info-panel" id="infoPanel"></div>
+        
+        <div class="theory-section" style="margin-top: 30px;">
+            <h2>Energy Considerations and Physical Insights</h2>
+            
+            <h3>Where Does the Energy Go?</h3>
+            <p>In all three scenarios, mechanical energy is converted to electrical energy (the induced EMF and current) and ultimately to thermal energy through resistive heating. This is not a "loss" in the thermodynamic sense—energy is conserved—but rather a transformation from organized mechanical motion to disordered thermal motion.</p>
+            
+            <div class="comparison-box">
+                <h4>The Damping Mechanism</h4>
+                <p>Electromagnetic damping is fundamentally different from mechanical friction:</p>
+                <ul>
+                    <li><strong>Mechanical friction:</strong> Force is roughly constant or varies with normal force (F = μN), independent of velocity</li>
+                    <li><strong>Electromagnetic damping:</strong> Force is proportional to velocity (F ∝ v), arising from Faraday's law where EMF ∝ dΦ/dt ∝ v</li>
+                </ul>
+                <p>This velocity-dependence means electromagnetic braking is "gentler" at low speeds—crucial for applications like magnetic levitation trains and electromagnetic brakes.</p>
+            </div>
+            
+            <h3>Terminal Velocity in Falling Magnets</h3>
+            <p>When a magnet falls through a conducting tube, it doesn't fall freely. Instead, it quickly reaches a <strong>terminal velocity</strong> where:</p>
+            <div class="equation-box">
+                <div class="equation">F<sub>gravity</sub> = F<sub>electromagnetic</sub></div>
+                <div class="equation">mg = b<sub>em</sub> · v<sub>terminal</sub></div>
+            </div>
+            <p>At this point, the magnet falls at constant speed. The stronger the magnetic field or the higher the conductivity of the tube, the lower the terminal velocity. This is why a powerful neodymium magnet can take many seconds to fall through a thick copper tube—a journey that would take a fraction of a second in free fall!</p>
+            
+            <h3>Resonance in Forced Oscillations</h3>
+            <p>When the driving frequency ω approaches the natural frequency ω₀, the system exhibits resonance—maximum amplitude oscillations. However, electromagnetic damping limits this amplitude. The sharpness of the resonance peak is characterized by the quality factor Q:</p>
+            <div class="equation-box">
+                <div class="equation">Q = ω₀ / (2γ)</div>
+            </div>
+            <p>where γ is the total damping coefficient. High Q means sharp resonance; low Q (heavy damping) means a broad, flat response. This principle is used in everything from radio tuners to mechanical watches to MRI machines.</p>
+            
+            <h3>Eddy Currents: From Brakes to Cooktops</h3>
+            <p>Eddy currents are both useful and problematic:</p>
+            <ul>
+                <li><strong>Useful:</strong> Electromagnetic brakes in trains, induction cooktops, metal detectors, damping in galvanometers</li>
+                <li><strong>Problematic:</strong> Energy losses in transformer cores, heating in motors, unwanted damping</li>
+            </ul>
+            <p>The solution to unwanted eddy currents? <strong>Lamination</strong>—stacking thin sheets of conductor separated by insulators. This forces eddy currents into much longer, more resistive paths, dramatically reducing their magnitude.</p>
+        </div>
+        
+        <div class="exam-workshop">
+            <h2>Exam Workshop: Magnet Through Coil</h2>
+            <p style="color: #90caf9; margin-bottom: 15px;">This section uses a typical exam question to test your understanding. Try answering each part yourself before revealing the student answer, commentary, and examiner's solution.</p>
+            
+            <div class="exam-question">
+                <h3 style="color: #64b5f6;">The Question</h3>
+                <p>A magnet is dropped so that it falls vertically through a coil of wire. An oscilloscope connected to the coil shows the EMF induced in the coil:</p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <svg width="400" height="200" style="background: rgba(0,0,0,0.3); border-radius: 8px;">
+                        <!-- Axes -->
+                        <line x1="50" y1="150" x2="350" y2="150" stroke="#90caf9" stroke-width="2"/>
+                        <line x1="50" y1="30" x2="50" y2="150" stroke="#90caf9" stroke-width="2"/>
+                        
+                        <!-- Labels -->
+                        <text x="200" y="180" fill="#90caf9" font-size="14" text-anchor="middle">time (ms)</text>
+                        <text x="25" y="100" fill="#90caf9" font-size="14" text-anchor="middle" transform="rotate(-90 25 100)">EMF (mV)</text>
+                        
+                        <!-- Waveform -->
+                        <path d="M 50 150 L 80 150 Q 110 80, 140 150 L 180 150 Q 220 180, 260 150 L 350 150" 
+                              fill="none" stroke="#ffeb3b" stroke-width="3"/>
+                        
+                        <!-- Peak markers -->
+                        <circle cx="125" cy="70" r="4" fill="#f44336"/>
+                        <circle cx="240" cy="190" r="4" fill="#4caf50"/>
+                        
+                        <text x="125" y="55" fill="#f44336" font-size="12" text-anchor="middle">positive peak</text>
+                        <text x="240" y="205" fill="#4caf50" font-size="12" text-anchor="middle">negative peak</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="exam-question">
+                <h4 style="color: #64b5f6;">(a) State Lenz's Law of electromagnetic induction. [2 marks]</h4>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-a-student')">Show Student Answer</button>
+                <div class="answer-section" id="answer-a-student">
+                    <div class="student-answer">
+                        <strong>Student's Answer:</strong>
+                        <p>"If a wire cuts magnetic field lines, a current is induced in the opposite direction."</p>
+                        <p style="color: #f44336; margin-top: 10px;"><strong>Mark: 0/2</strong></p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-a-comment')">Show Commentary</button>
+                <div class="answer-section" id="answer-a-comment">
+                    <div class="commentary">
+                        <strong>What's wrong:</strong>
+                        <ul>
+                            <li>A current only flows in a <em>complete circuit</em>—it's an <strong>EMF</strong> that's induced</li>
+                            <li>"Opposite direction to what?" The answer is vague and imprecise</li>
+                            <li>The key insight is missing: the EMF opposes the <em>change</em> causing it</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-a-examiner')">Show Examiner's Answer</button>
+                <div class="answer-section" id="answer-a-examiner">
+                    <div class="examiner-answer">
+                        <strong>Examiner's Answer:</strong>
+                        <p>"The direction of an induced EMF ✓ is such as to oppose the change producing it ✓"</p>
+                        <p style="color: #4caf50; margin-top: 10px;"><strong>Full marks: 2/2</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-question">
+                <h4 style="color: #64b5f6;">(b)(i) Explain the positive peak [3 marks]</h4>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b1-student')">Show Student Answer</button>
+                <div class="answer-section" id="answer-b1-student">
+                    <div class="student-answer">
+                        <strong>Student's Answer:</strong>
+                        <p>"The emf goes up as the magnet goes into the coil"</p>
+                        <p style="color: #f44336; margin-top: 10px;"><strong>Mark: 1/3</strong></p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b1-comment')">Show Commentary</button>
+                <div class="answer-section" id="answer-b1-comment">
+                    <div class="commentary">
+                        <strong>What's needed:</strong>
+                        <ul>
+                            <li>Why does the EMF increase? (More flux lines are being cut)</li>
+                            <li>Reference to <strong>rate of change of flux</strong></li>
+                            <li>Application of Lenz's Law to predict direction</li>
+                        </ul>
+                        <p>Describing <em>what</em> happens isn't enough—you must <em>explain why</em> it happens.</p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b1-examiner')">Show Examiner's Answer</button>
+                <div class="answer-section" id="answer-b1-examiner">
+                    <div class="examiner-answer">
+                        <strong>Examiner's Answer:</strong>
+                        <p>"The positive peak shows the EMF induced as the magnet enters the coil ✓ The rate of cutting flux increases as more of the field enters the coil, so the EMF increases ✓ By Lenz's Law, the current in the coil produces a magnetic field to try and repel the magnet ✓"</p>
+                        <p style="color: #4caf50; margin-top: 10px;"><strong>Full marks: 3/3</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-question">
+                <h4 style="color: #64b5f6;">(b)(ii) Explain the negative peak [2 marks]</h4>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b2-student')">Show Student Answer</button>
+                <div class="answer-section" id="answer-b2-student">
+                    <div class="student-answer">
+                        <strong>Student's Answer:</strong>
+                        <p>"The emf goes down as the magnet goes out of the other end of the coil"</p>
+                        <p style="color: #f44336; margin-top: 10px;"><strong>Mark: 0/2</strong></p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b2-comment')">Show Commentary</button>
+                <div class="answer-section" id="answer-b2-comment">
+                    <div class="commentary">
+                        <strong>Critical error:</strong>
+                        <p>The EMF doesn't "go down"—it increases in the <strong>opposite direction</strong>. A negative EMF is different from a decreasing positive EMF!</p>
+                        <p>More detail needed: <em>Why</em> does it reverse? Lenz's Law again—the EMF opposes the motion causing it. When the magnet exits, the EMF must try to "pull it back" by reversing direction.</p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b2-examiner')">Show Examiner's Answer</button>
+                <div class="answer-section" id="answer-b2-examiner">
+                    <div class="examiner-answer">
+                        <strong>Examiner's Answer:</strong>
+                        <p>"As the magnet begins to drop out of the coil, the EMF becomes negative ✓ Again by Lenz's Law, the current in the coil must reverse to 'try' and stop the magnet leaving the coil ✓"</p>
+                        <p style="color: #4caf50; margin-top: 10px;"><strong>Full marks: 2/2</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-question">
+                <h4 style="color: #64b5f6;">(b)(iii) Explain the relative magnitudes of the two peaks [2 marks]</h4>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b3-student')">Show Student Answer</button>
+                <div class="answer-section" id="answer-b3-student">
+                    <div class="student-answer">
+                        <strong>Student's Answer:</strong>
+                        <p>"The negative peak is bigger than the positive peak"</p>
+                        <p style="color: #f44336; margin-top: 10px;"><strong>Mark: 1/2</strong></p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b3-comment')">Show Commentary</button>
+                <div class="answer-section" id="answer-b3-comment">
+                    <div class="commentary">
+                        <strong>Correct observation, but where's the explanation?</strong>
+                        <p>The question asks you to <strong>explain</strong>, not just describe. You need to invoke physics from other topics—in this case, kinematics and gravity!</p>
+                        <p><strong>Key insight:</strong> The magnet is <em>accelerating</em> as it falls. By the time it exits the coil, it's moving faster than when it entered. Faster motion → higher rate of flux change → larger EMF.</p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b3-examiner')">Show Examiner's Answer</button>
+                <div class="answer-section" id="answer-b3-examiner">
+                    <div class="examiner-answer">
+                        <strong>Examiner's Answer:</strong>
+                        <p>"Since the magnet is accelerating under gravity, it is moving faster as it leaves the coil ✓ The rate at which flux is cut is increased, so the EMF, shown by the size of the negative peak, is greater ✓"</p>
+                        <p style="color: #4caf50; margin-top: 10px;"><strong>Full marks: 2/2</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-question">
+                <h4 style="color: #64b5f6;">(b)(iv) Explain the duration in time of the two peaks [1 mark]</h4>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b4-student')">Show Student Answer</button>
+                <div class="answer-section" id="answer-b4-student">
+                    <div class="student-answer">
+                        <strong>Student's Answer:</strong>
+                        <p>"The negative peak goes on for less time than the positive peak"</p>
+                        <p style="color: #f44336; margin-top: 10px;"><strong>Mark: 0/1</strong></p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b4-comment')">Show Commentary</button>
+                <div class="answer-section" id="answer-b4-comment">
+                    <div class="commentary">
+                        <strong>Another case of description without explanation!</strong>
+                        <p>Don't be afraid to think "outside the box." Physics doesn't come in convenient packages. This electromagnetic induction question requires you to apply knowledge from mechanics (kinematics under constant acceleration).</p>
+                        <p>The magnet spends less time exiting because it's moving <em>faster</em> by that point. Simple!</p>
+                    </div>
+                </div>
+                <button class="reveal-btn" onclick="toggleAnswer('answer-b4-examiner')">Show Examiner's Answer</button>
+                <div class="answer-section" id="answer-b4-examiner">
+                    <div class="examiner-answer">
+                        <strong>Examiner's Answer:</strong>
+                        <p>"The magnet is moving faster as it falls out of the coil, so the duration of the negative peak is shorter than that of the positive peak ✓"</p>
+                        <p style="color: #4caf50; margin-top: 10px;"><strong>Full mark: 1/1</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: rgba(76, 175, 80, 0.2); padding: 15px; margin-top: 20px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                <h4 style="color: #4caf50;">Key Exam Lessons</h4>
+                <ul>
+                    <li><strong>Be precise:</strong> "EMF" not "current" when discussing open circuits; "oppose the change" not just "opposite"</li>
+                    <li><strong>Explain, don't describe:</strong> Examiners want to see your reasoning, not just observations</li>
+                    <li><strong>Invoke Lenz's Law:</strong> Whenever discussing direction of induced EMF/current</li>
+                    <li><strong>Think across topics:</strong> Electromagnetic induction questions often require mechanics, calculus, or energy concepts</li>
+                    <li><strong>Use SI units throughout:</strong> Convert early, calculate once</li>
+                </ul>
+            </div>
+        </div>
     </div>
     
     <script>
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('visible');
+        }
         // Simulation state
         let currentScenario = 'falling';
         let isRunning = false;
         let time = 0;
-        let dtBase = 0.016; // base timestep (~60 FPS)
-        let simSpeed = 0.20; // 0.20 = 5× slower (≈10 s magnet fall)
+        let dt = 0.016; // ~60 FPS
         let animationId = null;
         
         // Physics parameters
@@ -490,22 +796,6 @@
             const controlsDiv = document.getElementById('controls');
             controlsDiv.innerHTML = '';
             
-            // Global simulation-speed control (affects motion + graphs)
-            const speedGroup = document.createElement('div');
-            speedGroup.className = 'control-group';
-            speedGroup.innerHTML = `
-                <label>Simulation speed (× real-time)</label>
-                <input type="range"
-                       id="simSpeed"
-                       min="0.05"
-                       max="1.00"
-                       step="0.05"
-                       value="${simSpeed}"
-                       oninput="updateSimSpeed(this.value)">
-                <div class="value-display" id="simSpeed-value">${simSpeed.toFixed(2)}×</div>
-            `;
-            controlsDiv.appendChild(speedGroup);
-
             const defs = controlDefs[currentScenario];
             defs.forEach(def => {
                 const group = document.createElement('div');
@@ -529,12 +819,6 @@
                 
                 controlsDiv.appendChild(group);
             });
-        }
-        
-        function updateSimSpeed(value) {
-            simSpeed = Math.max(0.05, Math.min(1.0, parseFloat(value)));
-            const el = document.getElementById('simSpeed-value');
-            if (el) el.textContent = simSpeed.toFixed(2) + '×';
         }
         
         function updateParam(name, value, scale = 1) {
@@ -974,20 +1258,18 @@
         }
         
         function updatePhysics() {
-            const dt = dtBase * simSpeed;
-
             if (currentScenario === 'falling') {
-                updateFalling(dt);
+                updateFalling();
             } else if (currentScenario === 'forced') {
-                updateForced(dt);
+                updateForced();
             } else if (currentScenario === 'pendulum') {
-                updatePendulum(dt);
+                updatePendulum();
             }
-
+            
             time += dt;
         }
         
-        function updateFalling(dt) {
+        function updateFalling() {
             const p = params.falling;
             
             // Electromagnetic damping coefficient
@@ -1013,7 +1295,7 @@
             p.timeData.push(time);
         }
         
-        function updateForced(dt) {
+        function updateForced() {
             const p = params.forced;
             
             const omega0 = Math.sqrt(p.k / p.mass);
@@ -1041,7 +1323,7 @@
             p.timeData.push(time);
         }
         
-        function updatePendulum(dt) {
+        function updatePendulum() {
             const p = params.pendulum;
             
             const g = 9.81;
